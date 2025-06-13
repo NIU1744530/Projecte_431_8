@@ -33,6 +33,8 @@ public:
 
     string toString() const;
 
+    void visualitza(int posX, int posY) const;
+
 private:
     TipusFitxa m_tipus;
     ColorFitxa m_color;
