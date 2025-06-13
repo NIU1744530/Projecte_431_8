@@ -438,13 +438,18 @@ bool Tauler::mouFitxa(const Posicio& origen, const Posicio& desti)
         {
             if (origenTeniaCaptura)
             {
+                // ➜ la peça que ha ignorat la captura es bufa
                 eliminaFitxa(desti);
             }
-            else if (!pecesAmbCaptura.empty())
+            else
             {
-                eliminaFitxa(pecesAmbCaptura.front());
+                // ➜ cap de les peces amb captura ha sigut moguda,
+                //     s’han de bufar TOTES les que l’havien de fer
+                for (const Posicio& p : pecesAmbCaptura)
+                    eliminaFitxa(p);
             }
         }
+
         actualitzaMovimentsValids();
     }
 
