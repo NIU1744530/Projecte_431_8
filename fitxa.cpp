@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <iostream>
 #include <string>
+#include "GraphicManager.h"
+
 
 using namespace std;
 
@@ -53,9 +55,11 @@ void Fitxa::afegeixMovimentValid(const Moviment& moviment)
 
 const Moviment& Fitxa::getMoviment(int index) const
 {
+    static Moviment invalidMoviment;
     if (index < 0 || index >= m_numMoviments)
     {
         cout << "Moviment no valid";
+        return invalidMoviment;
     }
     return m_moviments[index];
 }
@@ -100,5 +104,38 @@ string Fitxa::toString() const
         {
             return "X";
         }
+    }
+}
+
+void Fitxa::visualitza(int posX, int posY) const
+{
+    if (!esBuida())
+    {
+        IMAGE_NAME graphic;
+
+        if (m_color == COLOR_BLANC)
+        {
+            if (esDama())
+            {
+                graphic = GRAFIC_DAMA_BLANCA;
+            }
+            else
+            {
+                graphic = GRAFIC_FITXA_BLANCA;
+            }
+        }
+        else
+        {
+            if (esDama())
+            {
+                graphic = GRAFIC_DAMA_NEGRA;
+            }
+            else
+            {
+                graphic = GRAFIC_FITXA_NEGRA;
+            }
+        }
+
+        GraphicManager::getInstance()->drawSprite(graphic, posX, posY);
     }
 }
